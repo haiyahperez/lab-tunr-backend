@@ -4,6 +4,8 @@ const songs = express.Router();
 
 const { getAllSongs, getSong, createSong, updateSong, deleteSong } = require("../queries/songs");
 
+const { checkBoolean, checkName} = require("../validations/checkSongs");
+
 // READ ALL
 songs.get("/songs", async (_req, res) => {
     const allSongs = await getAllSongs();
@@ -25,7 +27,7 @@ songs.get('/:id', async (req, res) => {
 })
 
 // CREATE
-songs.post("/", async (req, res) => {
+songs.post("/",checkBoolean, checkName, async (req, res) => {
   try {
     const song = await createSong(req.body)
     res.json(song)
