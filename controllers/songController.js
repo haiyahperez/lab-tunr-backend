@@ -2,11 +2,16 @@ const express = require("express");
 const songs = express.Router();
 
 
-const { getAllSongs, getSong, createSong, updateSong, deleteSong } = require("../queries/songs");
+const { 
+  getAllSongs, 
+  getSong, 
+  createSong, 
+  updateSong, 
+  deleteSong } = require("../queries/songs");
 
 const { checkBoolean, checkName} = require("../validations/checkSongs");
 
-// READ ALL
+// GET ALL
 songs.get("/songs", async (_req, res) => {
     const allSongs = await getAllSongs();
 
@@ -32,7 +37,7 @@ songs.post("/",checkBoolean, checkName, async (req, res) => {
     const song = await createSong(req.body)
     res.json(song)
   } catch (error) {
-    res.status(400).json({ error: error })
+    res.status(400).json({ error })
   }
 })
 
